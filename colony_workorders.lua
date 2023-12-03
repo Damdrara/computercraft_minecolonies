@@ -41,7 +41,7 @@ basalt.schedule(function()
 
             local idx = 1;
             for i, resource in ipairs(resources) do
-                if resource.available > resource.needed then
+                if resource.available >= resource.needed then
                     workOrderLines = workOrderLines - 1
                     labelsNeeded = labelsNeeded - 1
                 else
