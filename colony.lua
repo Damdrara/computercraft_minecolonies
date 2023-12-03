@@ -31,51 +31,38 @@ local function openSubFrame(id)
     end
 end
 
-local function renderStats()
-    sub[1]:addProgram()
-        :setPosition(1, 1)
-        :setSize("parent.w", "parent.h")
-        :execute("colony_stats.lua")
-end
-
-local function renderColonists()
-    sub[2]:addProgram()
-        :setPosition(1, 1)
-        :setSize("parent.w", "parent.h")
-        :execute("colony_citizens.lua")
-end
-
-local function renderRequests()
-    sub[3]:addProgram()
-        :setPosition(1, 1)
-        :setSize("parent.w", "parent.h")
-        :execute("colony_requests.lua")
-end
-
-local function renderWorkOrders()
-    sub[4]:addProgram()
-        :setPosition(1, 1)
-        :setSize("parent.w", "parent.h")
-        :execute("colony_workorders.lua")
-end
-
-
 local menubar = main:addMenubar()
     :setSize("parent.w")
     :onChange(function(self, val)
         local index = self:getItemIndex()
         openSubFrame(index)
     end)
-    :addItem("Stats")
-    :addItem("Citizens")
-    :addItem("Requests")
-    :addItem("WorkOrders")
 
+local termWidth, termHeight = term.getSize()
 
-renderStats()
-renderColonists()
-renderRequests()
-renderWorkOrders()
+if (termWidth < 30) then
+    menubar:addItem("St")
+    menubar:addItem("Ci")
+    menubar:addItem("Rq")
+    menubar:addItem("WO")
+else
+    menubar:addItem("Stats")
+    menubar:addItem("Citizens")
+    menubar:addItem("Requests")
+    menubar:addItem("WorkOrders")
+end
+
+local function renderProgram(subId, program, addHeadline, headline)
+    sub[subId]:addProgram()
+        :setPosition(1, 1)
+        :setSize("parent.w", "parent.h")
+        :execute(program)
+end
+
+renderProgram(1, "colony_stats.lua")
+renderProgram(2, "colony_citizens.lua")
+renderProgram(3, "colony_requests.lua")
+renderProgram(4, "colony_workorders.lua")
 
 local time = main:addLabel():setText("--:--"):setPosition("parent.w - 5", 1):setZIndex(99)
 
