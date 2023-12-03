@@ -20,7 +20,7 @@ local lines = {
 
 basalt.schedule(function()
     while true do
-        lines[2]:setText("Citizens:           " .. colony.amountOfCitizens())
+        lines[2]:setText("Citizens:           " .. colony.amountOfCitizens() .. "/" .. colony.maxOfCitizens())
         lines[3]:setText("Building Sites:     " .. colony.amountOfConstructionSites())
         lines[4]:setText("Overall happiness:  " .. math.floor(colony.getHappiness()*10)/10)
         lines[5]:setText("Amount of graves:   " .. colony.amountOfGraves())
