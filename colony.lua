@@ -68,9 +68,15 @@ local time = main:addLabel():setText("--:--"):setPosition("parent.w - 5", 1):set
 
 basalt.schedule(function()
     while true do
-        local sTime = textutils.formatTime(os.time(), true)
+        local osTime = os.time()
+        local sTime = textutils.formatTime(osTime, true)
         sTime = strLpad(sTime, 5, " ")
         time:setText(sTime)
+        if osTime > 18.32 or osTime < 6.0 then
+            time:setForeground(colors.red)
+        else
+            time:setForeground(colors.black)
+        end
         sleep(1)
     end
 end)()
